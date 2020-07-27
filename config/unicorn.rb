@@ -8,6 +8,13 @@ pid "#{rails_root}/tmp/unicorn.pid"
 stderr_path "#{rails_root}/log/unicorn_error.log"
 stdout_path "#{rails_root}/log/unicorn.log"
 
+
+require 'fileutils'
+listen '/tmp/nginx.socket'
+before_fork do |server,worker|
+	FileUtils.touch('/tmp/app-initialized')
+end
+
 # # -*- coding: utf-8 -*-
 # worker_processes Integer(ENV["WEB_CONCURRENCY"] || 3)
 # timeout 15
